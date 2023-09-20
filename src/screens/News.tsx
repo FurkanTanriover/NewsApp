@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -6,32 +6,21 @@ import {
 } from 'react-native-responsive-screen';
 import NewsCard from '../components/NewsCard';
 import Carousel from '../components/Carousel';
+import {getPosts} from '../redux/action';
+import {useDispatch, useSelector} from 'react-redux';
 
 const News = () => {
-  const data = [
-    {
-      title: 'İçerik 1',
-      image: 'https://picsum.photos/200/300',
-      author: 'Furkan Tanrıöver',
-      description:
-        'Fintexh girişimi wamo, Finberg ve Re-Pie dan 1,5 milyon dolar yatırım aldı.',
-    },
-    {
-      title: 'İçerik 2',
-      image: 'https://picsum.photos/200/300',
-      author: 'Furkan Tanrıöver',
-      description:
-        'Fintexh girişimi wamo, Finberg ve Re-Pie dan 1,5 milyon dolar yatırım aldı.',
-    },
-    {
-      title: 'İçerik 3',
-      image: 'https://picsum.photos/200/300',
-      author: 'Furkan Tanrıöver',
-      description:
-        'Fintexh girişimi wamo, Finberg ve Re-Pie dan 1,5 milyon dolar yatırım aldı.',
-    },
-    // Daha fazla içerik ekleyebilirsiniz
-  ];
+  const dispatch = useDispatch();
+  const {posts} = useSelector(state => state.reducer);
+
+  const normalPosts = posts?.data?.filter(item => item.insights === false);
+  console.log('normalPosts', normalPosts);
+
+  const firstSevenPosts = normalPosts?.slice(0, 7);
+
+  useEffect(() => {
+    getPosts(dispatch);
+  }, [dispatch]);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -41,15 +30,14 @@ const News = () => {
           <View style={styles.highlightTitleContainer}>
             <Text className="text-2xl text-black font-bold"> Highlights</Text>
           </View>
-          <Carousel data={data} />
+          <Carousel data={firstSevenPosts} />
         </View>
       </View>
       {/* Sayfa İçeriği */}
       <View style={styles.content}>
-        <NewsCard />
-        <NewsCard />
-        <NewsCard />
-        <NewsCard />
+        {normalPosts?.map((item, index) => {
+          return <NewsCard key={index} data={item} />;
+        })}
       </View>
     </ScrollView>
   );
