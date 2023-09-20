@@ -1,70 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import BaseLayout from '../components/BaseLayout';
 import NewsCard from '../components/NewsCard';
+import {getPosts} from '../redux/action';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Insights = () => {
-  const data = [
-    {
-      category: 'Kategori 1',
-      description:
-        'Açıklamaskdjskdsdksjdksjdkdjsdkjdksjdksdjskdjskdjsskdjskdjskdjskdjskdsjdksksjdksdjskdskjdksjdksjdskjdksdjskdjskdjsdkskjdksdjskdjskdjskdjskdjssdkjkdjskdjs ',
-      author: 'Yazar 1',
-      daysAgo: 3,
-      imageUrl: require('./../assets/webrazzi-insights.png'),
-    },
-    {
-      category: 'Kategori 2',
-      description: 'Açıklama 2',
-      author: 'Yazar 2',
-      daysAgo: 7,
-      imageUrl: require('./../assets/webrazzi-insights.png'),
-    },
-    {
-      category: 'Kategori 1',
-      description:
-        'Açıklamaskdjskdsdksjdksjdkdjsdkjdksjdksdjskdjskdjsskdjskdjskdjskdjskdsjdksksjdksdjskdskjdksjdksjdskjdksdjskdjskdjsdkskjdksdjskdjskdjskdjskdjssdkjkdjskdjs ',
-      author: 'Yazar 1',
-      daysAgo: 3,
-      imageUrl: require('./../assets/webrazzi-insights.png'),
-    },
-    {
-      category: 'Kategori 2',
-      description: 'Açıklama 2',
-      author: 'Yazar 2',
-      daysAgo: 7,
-      imageUrl: require('./../assets/webrazzi-insights.png'),
-    },
-    {
-      category: 'Kategori 1',
-      description:
-        'Açıklamaskdjskdsdksjdksjdkdjsdkjdksjdksdjskdjskdjsskdjskdjskdjskdjskdsjdksksjdksdjskdskjdksjdksjdskjdksdjskdjskdjsdkskjdksdjskdjskdjskdjskdjssdkjkdjskdjs ',
-      author: 'Yazar 1',
-      daysAgo: 3,
-      imageUrl: require('./../assets/webrazzi-insights.png'),
-    },
-    {
-      category: 'Kategori 2',
-      description: 'Açıklama 2',
-      author: 'Yazar 2',
-      daysAgo: 7,
-      imageUrl: require('./../assets/webrazzi-insights.png'),
-    },
-    // Diğer kartlar
-  ];
+  const dispatch = useDispatch();
+  const {posts} = useSelector(state => state.reducer);
+
+  const insightsPost = posts?.data?.filter(item => item.insights === true);
+  console.log('insightsPost', insightsPost);
+
+  useEffect(() => {
+    getPosts(dispatch);
+  }, [dispatch]);
   return (
     <BaseLayout image={require('./../assets/webrazzi-insights.png')}>
       <View>
-        {data.map((item, index) => (
-          <NewsCard
-            key={index}
-            category={item.category}
-            description={item.description}
-            author={item.author}
-            daysAgo={item.daysAgo}
-            imageUrl={item.imageUrl}
-          />
-        ))}
+        {insightsPost?.map((item, index) => {
+          return <NewsCard key={index} data={item} />;
+        })}
       </View>
     </BaseLayout>
   );
