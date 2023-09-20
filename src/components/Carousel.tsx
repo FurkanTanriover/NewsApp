@@ -1,29 +1,49 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Touchable,
+  TouchableOpacity,
+} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
 
 const MyCarousel = ({data}) => {
+  const navigation = useNavigation();
+
   const renderItem = ({item}) => {
+    const openWebPage = () => {
+      navigation.navigate('WebPage', {url: item.url});
+    };
+
     return (
-      <View style={styles.card}>
-        <Image
-          source={{uri: item.image}}
-          style={styles.cardImage}
-          resizeMode="cover"
-        />
-        <View style={styles.cardContent}>
-          <View style={styles.contentDescription}>
-            <Text className="font-bold text-center text-lg">{item.description}</Text>
-          </View>
-          <View style={styles.constentCreator}>
-            <Text className="text-gray-700 font-bold text-sm">{item.author}</Text>
+      <TouchableOpacity onPress={() => openWebPage()}>
+        <View style={styles.card}>
+          <Image
+            source={{uri: item?.thumbnails?.full.url}}
+            style={styles.cardImage}
+            resizeMode="cover"
+          />
+          <View style={styles.cardContent}>
+            <View style={styles.contentDescription}>
+              <Text className="font-bold text-center text-lg">
+                {item.title}
+              </Text>
+            </View>
+            <View style={styles.constentCreator}>
+              <Text className="text-gray-700 font-bold text-sm">
+                {item.author.full_name}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
