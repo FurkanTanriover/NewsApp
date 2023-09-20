@@ -62,7 +62,11 @@ const HeaderRight = () => {
       }}>
       {isSearchActive ? (
         // Arama simgesini gizle
-        <TouchableOpacity onPress={() => setIsSearchActive(false)}>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(setSearchQuery(''));
+            setIsSearchActive(false);
+          }}>
           <Image
             source={require('../assets/close.png')}
             style={{width: wp(5), height: hp(2.4), marginRight: 12}}
