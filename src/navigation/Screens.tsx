@@ -12,10 +12,12 @@ import Collection from '../screens/Collection';
 import Insights from '../screens/Insights';
 import News from '../screens/News';
 import Profile from '../screens/Profile';
+import WebPage from '../screens/WebPage';
 
 type RootStackParamList = {
   Auth: undefined;
   TabStackScreen: undefined;
+  WebPage: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -95,6 +97,7 @@ const TabStackScreen: React.FC = () => {
               source={iconName}
               style={{
                 width: hp(2.5),
+                height: hp(2.5),
                 tintColor: focused ? 'black' : color,
               }}
               resizeMode="contain"
@@ -117,18 +120,6 @@ const TabStackScreen: React.FC = () => {
   );
 };
 
-// const DrawerNavigator = createDrawerNavigator(
-//   {
-//     TabStackScreen: {
-//       screen: TabStackScreen,
-//     },
-//   },
-//   {
-//     contentComponent: HamburgerMenu, // Sol taraftan açılabilir menüyü burada belirtin
-//     drawerWidth: 300, // Menü genişliğini ayarlayın
-//   },
-// );
-
 const Screens = () => {
   return (
     <Stack.Navigator initialRouteName={'TabStackScreen'}>
@@ -140,6 +131,11 @@ const Screens = () => {
         }}
         name="TabStackScreen"
         component={TabStackScreen}
+      />
+      <Stack.Screen
+        options={{title: '', headerLeft: () => <HeaderLeft />}}
+        name="WebPage"
+        component={WebPage}
       />
     </Stack.Navigator>
   );
