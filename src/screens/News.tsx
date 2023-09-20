@@ -12,15 +12,18 @@ import {useDispatch, useSelector} from 'react-redux';
 const News = () => {
   const dispatch = useDispatch();
   const {posts} = useSelector(state => state.reducer);
-
+  const searchQuery = useSelector(state => state.reducer.searchQuery);
   const normalPosts = posts?.data?.filter(item => item.insights === false);
-  console.log('normalPosts', normalPosts);
+
+  const filteredPosts = normalPosts?.filter(item =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   const firstSevenPosts = normalPosts?.slice(0, 7);
 
   useEffect(() => {
     getPosts(dispatch);
-  }, [dispatch]);
+  }, [dispatch, searchQuery]);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -35,7 +38,7 @@ const News = () => {
       </View>
       {/* Sayfa İçeriği */}
       <View style={styles.content}>
-        {normalPosts?.map((item, index) => {
+        {filteredPosts?.map((item, index) => {
           return <NewsCard key={index} data={item} />;
         })}
       </View>

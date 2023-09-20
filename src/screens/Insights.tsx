@@ -8,8 +8,12 @@ import {useDispatch, useSelector} from 'react-redux';
 const Insights = () => {
   const dispatch = useDispatch();
   const {posts} = useSelector(state => state.reducer);
-
+  const searchQuery = useSelector(state => state.reducer.searchQuery);
   const insightsPost = posts?.data?.filter(item => item.insights === true);
+
+  const filteredPosts = insightsPost?.filter(item =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   useEffect(() => {
     getPosts(dispatch);
@@ -17,7 +21,7 @@ const Insights = () => {
   return (
     <BaseLayout image={require('./../assets/webrazzi-insights.png')}>
       <View>
-        {insightsPost?.map((item, index) => {
+        {filteredPosts?.map((item, index) => {
           return <NewsCard key={index} data={item} />;
         })}
       </View>

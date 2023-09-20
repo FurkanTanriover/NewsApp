@@ -1,7 +1,8 @@
-import {GET_POST_DATA} from '../utils/constants';
+import {GET_POST_DATA, SET_SEARCH_QUERY} from '../utils/constants';
 
 const initialState = {
   posts: [],
+  searchQuery: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         posts: action.payload,
+      };
+    case SET_SEARCH_QUERY:
+      return {
+        ...state,
+        searchQuery: action.payload,
       };
     default:
       return state;

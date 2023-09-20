@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -13,6 +13,9 @@ import Insights from '../screens/Insights';
 import News from '../screens/News';
 import Profile from '../screens/Profile';
 import WebPage from '../screens/WebPage';
+
+import {useDispatch, useSelector} from 'react-redux';
+import {setSearchQuery} from '../redux/action';
 
 type RootStackParamList = {
   Auth: undefined;
@@ -37,18 +40,52 @@ const HeaderLeft = () => {
 };
 
 const HeaderRight = () => {
+  const [isSearchActive, setIsSearchActive] = useState(false);
+  const searchQuery = useSelector(state => state.searchQuery);
+  const dispatch = useDispatch();
+
+  const handleSearchIconPress = () => {
+    setIsSearchActive(true);
+  };
+
+  const handleSearchConfirm = () => {
+    if (searchQuery.trim() !== '') {
+      dispatch(setSearchQuery(searchQuery));
+    }
+  };
+
   return (
     <View
       style={{
         flexDirection: 'row',
         alignItems: 'center',
       }}>
-      <TouchableOpacity onPress={() => console.log('Arama')}>
-        <Image
-          source={require('../assets/search.png')}
-          style={{width: wp(5), height: hp(2.4), marginRight: 12}}
+      {isSearchActive ? (
+        // Arama simgesini gizle
+        <TouchableOpacity onPress={() => setIsSearchActive(false)}>
+          <Image
+            source={require('../assets/close.png')}
+            style={{width: wp(5), height: hp(2.4), marginRight: 12}}
+          />
+        </TouchableOpacity>
+      ) : (
+        // Arama simgesini göster
+        <TouchableOpacity onPress={handleSearchIconPress}>
+          <Image
+            source={require('../assets/search.png')}
+            style={{width: wp(5), height: hp(2.4), marginRight: 12}}
+          />
+        </TouchableOpacity>
+      )}
+      {isSearchActive && (
+        <TextInput
+          style={{width: wp(30)}}
+          placeholder="Arama yapın..."
+          value={searchQuery}
+          onChangeText={text => dispatch(setSearchQuery(text))}
+          onSubmitEditing={handleSearchConfirm}
         />
-      </TouchableOpacity>
+      )}
       <TouchableOpacity onPress={() => console.log('Bildirimler')}>
         <Image
           source={require('../assets/notification.png')}
