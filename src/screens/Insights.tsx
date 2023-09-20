@@ -10,7 +10,6 @@ const Insights = () => {
   const {posts} = useSelector(state => state.reducer);
 
   const insightsPost = posts?.data?.filter(item => item.insights === true);
-  console.log('insightsPost', insightsPost);
 
   useEffect(() => {
     getPosts(dispatch);
