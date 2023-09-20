@@ -1,11 +1,5 @@
 import React, {ReactNode} from 'react';
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  View,
-  ImageSourcePropType,
-} from 'react-native';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -13,7 +7,7 @@ import {
 
 interface BaseLayoutProps {
   children: ReactNode;
-  image: ImageSourcePropType; // Dışarıdan alınacak görsel
+  image: string; 
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({children, image}) => {
