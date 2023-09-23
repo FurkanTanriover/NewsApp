@@ -26,7 +26,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
     navigation.navigate('WebPage', {url: data.url});
   };
   return (
-    <TouchableOpacity onPress={() => openWebPage()}>
+    <TouchableOpacity key={data.id} onPress={() => openWebPage()}>
       <View style={[styles.container, {height: cardHeight, width: cardWidth}]}>
         <View style={styles.titleSection}>
           <Text className="uppercase text-gray-500 text-xs font-bold">

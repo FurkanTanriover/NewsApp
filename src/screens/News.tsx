@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -8,6 +8,12 @@ import NewsCard from '../components/NewsCard';
 import Carousel from '../components/Carousel';
 import {getPosts} from '../redux/action';
 import {useDispatch, useSelector} from 'react-redux';
+
+class NewsItem extends React.PureComponent {
+  render() {
+    return <NewsCard data={this.props.data} />;
+  }
+}
 
 const News = () => {
   const dispatch = useDispatch();
@@ -38,9 +44,12 @@ const News = () => {
       </View>
       {/* Sayfa İçeriği */}
       <View style={styles.content}>
-        {filteredPosts?.map((item, index) => {
-          return <NewsCard key={index} data={item} />;
-        })}
+        <FlatList
+          data={filteredPosts}
+          renderItem={({item}) => <NewsItem data={item} />}
+          keyExtractor={item => item.id.toString()}
+          scrollEnabled={false}
+        />
       </View>
     </ScrollView>
   );

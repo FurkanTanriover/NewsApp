@@ -1,9 +1,15 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import BaseLayout from '../components/BaseLayout';
 import NewsCard from '../components/NewsCard';
 import {getPosts} from '../redux/action';
 import {useDispatch, useSelector} from 'react-redux';
+
+class InsightsItem extends React.PureComponent {
+  render() {
+    return <NewsCard data={this.props.data} />;
+  }
+}
 
 const Insights = () => {
   const dispatch = useDispatch();
@@ -20,11 +26,12 @@ const Insights = () => {
   }, [dispatch]);
   return (
     <BaseLayout image={require('./../assets/webrazzi-insights.png')}>
-      <View>
-        {filteredPosts?.map((item, index) => {
-          return <NewsCard key={index} data={item} />;
-        })}
-      </View>
+      <FlatList
+        data={filteredPosts}
+        renderItem={({item}) => <InsightsItem data={item} />}
+        keyExtractor={item => item.id.toString()}
+        scrollEnabled={false}
+      />
     </BaseLayout>
   );
 };
