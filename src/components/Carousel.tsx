@@ -1,18 +1,11 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Touchable,
-  TouchableOpacity,
-} from 'react-native';
-import Carousel from 'react-native-snap-carousel';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import {useNavigation} from '@react-navigation/native';
+import Carousel from 'react-native-snap-carousel';
 
 const MyCarousel = ({data}) => {
   const navigation = useNavigation();
@@ -54,7 +47,7 @@ const MyCarousel = ({data}) => {
       sliderWidth={wp(100)}
       itemWidth={wp(85)}
       autoplay={false}
-      //   autoplayInterval={2000}
+      // autoplayInterval={2000}
     />
   );
 };

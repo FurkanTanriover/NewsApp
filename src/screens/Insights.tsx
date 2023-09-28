@@ -1,11 +1,15 @@
 import React, {useEffect} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList} from 'react-native';
 import BaseLayout from '../components/BaseLayout';
 import NewsCard from '../components/NewsCard';
 import {getPosts} from '../redux/action';
 import {useDispatch, useSelector} from 'react-redux';
 
-class InsightsItem extends React.PureComponent {
+interface InsightsItemProps {
+  data: [];
+}
+
+class InsightsItem extends React.Component<InsightsItemProps> {
   render() {
     return <NewsCard data={this.props.data} />;
   }
@@ -13,11 +17,13 @@ class InsightsItem extends React.PureComponent {
 
 const Insights = () => {
   const dispatch = useDispatch();
-  const {posts} = useSelector(state => state.reducer);
-  const searchQuery = useSelector(state => state.reducer.searchQuery);
-  const insightsPost = posts?.data?.filter(item => item.insights === true);
+  const {posts} = useSelector((state: any) => state.reducer);
+  const searchQuery = useSelector((state: any) => state.reducer.searchQuery);
+  const insightsPost = posts?.data?.filter(
+    (item: any) => item.insights === true,
+  );
 
-  const filteredPosts = insightsPost?.filter(item =>
+  const filteredPosts = insightsPost?.filter((item: any) =>
     item.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
@@ -37,5 +43,3 @@ const Insights = () => {
 };
 
 export default Insights;
-
-const styles = StyleSheet.create({});
