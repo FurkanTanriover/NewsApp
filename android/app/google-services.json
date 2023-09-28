@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "647467610311",
+    "project_id": "news-app-a84c7",
+    "storage_bucket": "news-app-a84c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647467610311:android:1cb6db117ff05b838ccee2",
+        "android_client_info": {
+          "package_name": "com.furki.newsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647467610311-s8vulknef37ifbkmjpbnmqtqc5d558oq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.furki.newsapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "647467610311-eudvda9ve3ho7d6l1ncm4t04gialko8a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0LdrllaebzFoIhgp_YMQJ1voR3D-IRt0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647467610311-eudvda9ve3ho7d6l1ncm4t04gialko8a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "647467610311-i4058be8csgrt6m6ogpljsc53cmv6njh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.furki.newsapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
