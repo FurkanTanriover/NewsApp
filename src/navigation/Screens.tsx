@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -16,11 +16,14 @@ import WebPage from '../screens/WebPage';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {setSearchQuery} from '../redux/action';
+import Login from '../screens/Login';
+import {getTokenFromStorage} from '../redux/action';
 
 type RootStackParamList = {
   Auth: undefined;
   TabStackScreen: undefined;
   WebPage: undefined;
+  Login: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -162,8 +165,25 @@ const TabStackScreen: React.FC = () => {
 };
 
 const Screens = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.reducer.token);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadToken = async () => {
+      await dispatch(getTokenFromStorage());
+      setLoading(false); // Token yüklendikten sonra loading'i false yap
+    };
+
+    loadToken();
+  }, [dispatch]);
+
+  if (loading) {
+    return null;
+  }
+
   return (
-    <Stack.Navigator initialRouteName={'TabStackScreen'}>
+    <Stack.Navigator initialRouteName={token ? 'TabStackScreen' : 'Login'}>
       <Stack.Screen
         options={{
           title: '',
@@ -177,6 +197,11 @@ const Screens = () => {
         options={{title: '', headerLeft: () => <HeaderLeft />}}
         name="WebPage"
         component={WebPage}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Login"
+        component={Login}
       />
     </Stack.Navigator>
   );
