@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import * as Icons from 'react-native-heroicons/outline';
 import {
@@ -12,11 +12,26 @@ import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
 const Profile = () => {
-  const userInfo = AsyncStorage.getItem('@userInfo');
-  console.log('userInfo=>', userInfo);
+  const [userInfo, setUserInfo] = React.useState(null);
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@userInfo');
+      if (value !== null) {
+        // We have data!!
+        setUserInfo(JSON.parse(value));
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
   const sections = [
     {
       title: 'Bildirimlerim',
@@ -53,9 +68,9 @@ const Profile = () => {
   return (
     <View style={styles.container}>
       <View style={styles.userSection}>
-        <UserAvatar avatarUrl={'https://i.pravatar.cc/300'} />
+        <UserAvatar avatarUrl={userInfo?.photo} />
         <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
-          Kullanıcı Adı
+          {userInfo?.givenName + ' ' + userInfo?.familyName}
         </Text>
       </View>
       <View>

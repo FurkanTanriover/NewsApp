@@ -23,6 +23,7 @@ export const signInWithGoogle = async (dispatch, success) => {
   try {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
+    console.log('userInfo', JSON.stringify(userInfo.user));
     if (userInfo.idToken) {
       AsyncStorage.setItem('@userInfo', JSON.stringify(userInfo.user));
       dispatch(setToken(userInfo.idToken));

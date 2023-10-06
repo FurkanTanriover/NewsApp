@@ -35,7 +35,9 @@ const NewsCard: React.FC<NewsCardProps> = ({
         </View>
         <View style={styles.descAndImageSection}>
           <View style={styles.descriptionSection}>
-            <Text className="text-black text-base font-bold">{data?.title}</Text>
+            <Text className="text-black text-base font-bold">
+              {data?.title}
+            </Text>
           </View>
           <View style={styles.imageSection}>
             <Image
