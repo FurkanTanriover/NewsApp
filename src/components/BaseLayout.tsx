@@ -7,7 +7,7 @@ import {
 
 interface BaseLayoutProps {
   children: ReactNode;
-  image: string; 
+  image: string;
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({children, image}) => {

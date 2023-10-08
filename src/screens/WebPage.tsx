@@ -1,14 +1,14 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-const WebPage = ({route}) => {
+const WebPage = ({route}: any) => {
   const websiteLink = route.params.url;
   return (
-    <WebView source={{uri: websiteLink}} style={{flex: 1, marginTop: hp(-20)}} />
+    <WebView
+      source={{uri: websiteLink}}
+      style={{flex: 1, marginTop: hp(-20)}}
+    />
   );
 };
 

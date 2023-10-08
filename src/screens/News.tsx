@@ -9,7 +9,10 @@ import Carousel from '../components/Carousel';
 import {getPosts} from '../redux/action';
 import {useDispatch, useSelector} from 'react-redux';
 
-class NewsItem extends React.PureComponent {
+interface NewsItemProps {
+  data: [];
+}
+class NewsItem extends React.Component<NewsItemProps> {
   render() {
     return <NewsCard data={this.props.data} />;
   }
@@ -17,11 +20,13 @@ class NewsItem extends React.PureComponent {
 
 const News = () => {
   const dispatch = useDispatch();
-  const {posts} = useSelector(state => state.reducer);
-  const searchQuery = useSelector(state => state.reducer.searchQuery);
-  const normalPosts = posts?.data?.filter(item => item.insights === false);
+  const {posts} = useSelector((state: any) => state.reducer);
+  const searchQuery = useSelector((state: any) => state.reducer.searchQuery);
+  const normalPosts = posts?.data?.filter(
+    (item: any) => item.insights === false,
+  );
 
-  const filteredPosts = normalPosts?.filter(item =>
+  const filteredPosts = normalPosts?.filter((item: any) =>
     item.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 

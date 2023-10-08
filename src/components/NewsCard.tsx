@@ -21,25 +21,25 @@ const NewsCard: React.FC<NewsCardProps> = ({
   cardWidth = wp(90), // Ekran genişliğinin %90'ı
 }) => {
   const navigation = useNavigation();
-  const daysAgo = daysAgoFromDate(data.published_at);
+  const daysAgo = daysAgoFromDate(data?.published_at);
   const openWebPage = () => {
-    navigation.navigate('WebPage', {url: data.url});
+    navigation.navigate('WebPage', {url: data?.url});
   };
   return (
-    <TouchableOpacity key={data.id} onPress={() => openWebPage()}>
+    <TouchableOpacity key={data?.id} onPress={() => openWebPage()}>
       <View style={[styles.container, {height: cardHeight, width: cardWidth}]}>
         <View style={styles.titleSection}>
           <Text className="uppercase text-gray-500 text-xs font-bold">
-            {data.categories[0].title}
+            {data?.categories[0]?.title}
           </Text>
         </View>
         <View style={styles.descAndImageSection}>
           <View style={styles.descriptionSection}>
-            <Text className="text-black text-base font-bold">{data.title}</Text>
+            <Text className="text-black text-base font-bold">{data?.title}</Text>
           </View>
           <View style={styles.imageSection}>
             <Image
-              source={data.thumbnails.full}
+              source={data?.thumbnails?.full}
               style={{width: '100%', height: '100%'}}
               resizeMode="contain"
             />
@@ -48,7 +48,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
         <View style={styles.authorAndCollectionSection}>
           <View style={styles.authorSection}>
             <Text className="text-gray-700 font-bold">
-              {data.author.full_name}
+              {data?.author?.full_name}
             </Text>
             <Text> 〰 </Text>
             <Text className="text-gray-700 font-normal">{daysAgo}</Text>

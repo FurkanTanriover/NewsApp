@@ -1,6 +1,4 @@
-import {Linking} from 'react-native';
-
-function daysAgoFromDate(dateString) {
+function daysAgoFromDate(dateString: string | number | Date) {
   // Verilen tarihi bir Date nesnesine çevirin
   const date = new Date(dateString);
 
