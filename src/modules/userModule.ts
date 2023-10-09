@@ -41,7 +41,7 @@ export const createUserInHasura = async (user: any) => {
       variables: {userId: id},
     });
 
-    // Kullanıcı mevcut değilse ekleyin
+    // Kullanıcı mevcut değilse ekle
     if (!data.users.length) {
       const createUserResult = await apolloClient.mutate({
         mutation: CREATE_USER_MUTATION,

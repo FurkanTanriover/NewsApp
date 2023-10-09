@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {
@@ -5,8 +6,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {daysAgoFromDate} from '../utils/helpers';
-import WebPage from '../screens/WebPage';
-import {useNavigation} from '@react-navigation/native';
+import {createCollectionInHasura} from '../modules/collectionModule';
 interface NewsCardProps {
   data: [];
   cardHeight?: number;
@@ -14,6 +14,20 @@ interface NewsCardProps {
   imageHeight?: number;
   imageWidth?: number;
 }
+
+const handleAddToCollection = async (data: any) => {
+  console.log('data', data);
+  const collectionData = {
+    id: data.id, // Koleksiyonun benzersiz kimliği
+    excerpt: data.excerpt, // Koleksiyonun özet bilgisi
+    thumbnail: data.thumbnails, // Koleksiyonun küçük resmi
+    title: data.title, // Koleksiyonun başlığı
+    url: data.url, // Koleksiyonun URL'si
+    authorData: data.author, // Koleksiyonun yazar verileri
+    categories: data.categories, // Koleksiyonun kategorileri
+  };
+  await createCollectionInHasura(collectionData);
+};
 
 const NewsCard: React.FC<NewsCardProps> = ({
   data,
@@ -56,8 +70,9 @@ const NewsCard: React.FC<NewsCardProps> = ({
             <Text className="text-gray-700 font-normal">{daysAgo}</Text>
           </View>
           <View style={styles.collectionSection}>
-            <TouchableOpacity onPress={() => console.log('Koleksiyon')}>
+            <TouchableOpacity onPress={() => handleAddToCollection(data)}>
               <Image
+                style={{}}
                 className="w-6 h-6"
                 source={require('../assets/collection.png')}
                 resizeMode="contain"
