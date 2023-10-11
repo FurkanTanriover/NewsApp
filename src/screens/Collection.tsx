@@ -1,13 +1,20 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import BaseLayout from '../components/BaseLayout';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+import {getCollectionsFromHasura} from '../modules/collectionModule';
 import NewsCard from '../components/NewsCard';
 
 const Collection = () => {
+  const [collections, setCollections] = React.useState([]);
+  React.useEffect(() => {
+    const getCollections = async () => {
+      const collections = await getCollectionsFromHasura();
+      setCollections(collections);
+    };
+    getCollections();
+  }, []);
+  console.log('collections', collections);
   return (
     <BaseLayout image={require('./../assets/gray-gradient.png')}>
       <View>
@@ -16,7 +23,9 @@ const Collection = () => {
           <View className="w-[50%] h-1 bg-[#EDD153]"></View>
         </View>
         <View style={styles.contentContainer}>
-          <NewsCard />
+          {collections.map((collection: any) => (
+            <NewsCard data={collection} />
+          ))}
         </View>
       </View>
     </BaseLayout>

@@ -13,6 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const Profile = () => {
   const [userInfo, setUserInfo] = React.useState(null);
+  console.log('userInfo', userInfo);
 
   useEffect(() => {
     getUserData();
